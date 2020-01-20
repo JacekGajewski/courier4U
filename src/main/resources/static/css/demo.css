@@ -1,0 +1,18 @@
+a {
+    text-decoration: none;
+}
+
+.anchor-sort{
+    color: white;
+ }
+
+.big-button {
+    border: none;
+    color: white;
+    max-width: 340px !important;
+    padding: 60px 140px !important;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 32px;
+}

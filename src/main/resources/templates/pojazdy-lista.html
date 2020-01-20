@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Courier List</title>
+    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Courier4U</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <form class="form-inline my-2 my-lg-0 ml-auto">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Cennik </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">O nas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Kontakt</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profil</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col">
+
+            <form th:action="@{/pojazdy/search}"
+                  th:object="${pojazd}">
+
+                <input type="hidden" th:field="*{idPojazd}"/>
+
+                <br>Cennik:<br>
+                <input id="cennikFiltr" type="number" th:field="*{cennik}"
+                       class="form-control" placeholder="Cennik">
+
+                <br>Ocena:<br>
+                <input id="ocenaFiltr" type="number" th:field="*{kurier.ocena}"
+                       class="form-control" placeholder="Ocena">
+                <br>Waga:<br>
+                <input type="number" th:field="*{ladownosc}"
+                       class="form-control" placeholder="Waga">
+
+                <br>Lokalizacja:<br>
+                <input id="lokalizacjaFiltr" type="text" th:field="*{kurier.lokalizacja}"
+                       class="form-control mb-4">
+
+                <button id="filtrBtn" type="submit" class="btn btn-info">Filtruj</button>
+            </form>
+        </div>
+        <div class="col-9">
+            <div>
+            </div>
+            <table class="table table-bordered table-stripped text-center table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Pojazd</th>
+                    <th>Rok produkcji</th>
+                    <th><a class="anchor-sort" th:href="@{/pojazdy/sortWaga}">Waga</a></th>
+                    <th><a class="anchor-sort" th:href="@{/pojazdy/sortOcena}">Ocena</a></th>
+                    <th><a class="anchor-sort" th:href="@{/pojazdy/sortCena}">Cena [PLN/100km]</a></th>
+                    <th>Lokalizacja</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  th:each="tempPojazd : ${pojazdy}">
+                    <td>
+                        <a th:text="${tempPojazd.getMarka()}"  th:href="@{/pojazdy/showDetails(pojazdId=${tempPojazd.getIdPojazd()})}">
+                        </a>
+                    </td>
+                    <td th:text="${tempPojazd.getRocznik()}"/>
+                    <td th:text="${tempPojazd.getLadownosc()}"/>
+                    <td th:text="${tempPojazd.getKurier().getOcena()}"/>
+                    <td th:text="${tempPojazd.getCennik()}"/>
+                    <td th:text="${tempPojazd.getKurier().getLokalizacja()}"/>
+                </tr>
+                </tbody>
+            </table>
+            <div class="text-center" th:if="${pojazdy.isEmpty()}">Brak dostępnych kurierów o podanych parametrach</div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

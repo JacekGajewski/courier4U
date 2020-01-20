@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Platnosc karta</title>
+    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/pojazdy/list}">Courier4U</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <form class="form-inline my-2 my-lg-0 ml-auto">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Cennik </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">O nas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Kontakt</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profil</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+
+    <br>
+    <br>
+
+    <form class="form-horizontal" role="form"
+          th:action="@{/platnosc/karta/zaplac}"
+          th:object="${karta}">
+        <fieldset>
+            <legend>Podaj dane karty</legend>
+
+            <br>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="card-holder-name">Dane posiadacza</label>
+                <div class="col-sm-9">
+                    <input th:field="*{danePosiadacza}" type="text" class="form-control" name="card-holder-name"
+                           id="danePosiadacza">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="card-number">Numer karty</label>
+                <div class="col-sm-9">
+                    <input th:field="*{numerKarty}" type="text" class="form-control" name="card-number"
+                           id="numerKarty">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-xs-5 ml-3">
+                            <label class="col-sm-3 control-label" for="expiry-month">Miesiąc</label>
+                            <select th:field="*{miesiac}" class="form-control" name="expiry-month" id="expiry-month">
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-5 ml-3">
+                            <label class="col-sm-3 control-label" for="expiry-month">Rok</label>
+                            <select th:field="*{rok}" class="form-control" name="expiry-year">
+                                <option value="20">2020</option>
+                                <option value="21">2021</option>
+                                <option value="22">2022</option>
+                                <option value="23">2023</option>
+                                <option value="24">2024</option>
+                                <option value="25">2025</option>
+                                <option value="26">2026</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="cvv">CVV</label>
+                <div class="col-sm-3">
+                    <input th:field="*{CVV}" type="text" class="form-control" name="cvv" id="cvv">
+                </div>
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <button id="submitBtn" type="submit" class="btn btn-primary">Potwierdź i zapłać</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script th:inline="javascript">
+
+    var walidacja = /*[[${walidacja}]]*/ "Test";
+    if (walidacja === -1) alert("Niepoprawne dane karty");
+    else if (walidacja === 0) alert("Uzupełnij dane karty");
+    else if (walidacja === 1) {
+        alert("Płatność została poprawnie zrealizowana");
+    }
+
+</script>
+</body>
+</html>
